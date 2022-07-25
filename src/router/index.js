@@ -1,27 +1,49 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+const Login = () => import("../views/login/Login") // 路由懒加载
+const Home = () => import("@/views/home/Home")
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '',
+    redirect: '/Login'
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/Login',
+    component: Login
+  }, {
+    path: '/Home',
+    component: Home
   }
+  
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
+
+
+
+// 设置路由导航守卫 实现访问权限  如果用户没有登录 要直接通过URL访问特定网页,需要重新导航到登录页面
+// 为路由对象添加beforeEach 导航守卫
+// to: 将要跳转的页面
+// from: 从哪个页面跳转
+// next: 将要放行的函数 两种方式 1. next() 放行到将要跳转的页面   2. next('/Login') 强制跳转到登录界面 
+router.beforeEach((to, from, next) => {
+  // 如果用户访问登录页面,直接放行
+  if (to.path === '/Login') return next()
+  // 从 sessionStorage 中获取到 保存的 token 值
+  const tokenStr = window.sessionStorage.getItem('token')
+  // 如果 tokenStr 为空 就是 没有权限访问 特定页面 放行回到 登录界面 
+  if (!tokenStr) return next('/Login')
+  // 如果 token 有值 放行到将要跳转页面
+  next()
+})
+
+
 
 export default router
