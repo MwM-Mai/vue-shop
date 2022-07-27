@@ -6,3 +6,25 @@ html, body, #app {
   padding: 0;
 
 }
+
+/* 面包屑的全局样式 */
+.el-breadcrumb {
+  margin-bottom: 15px;
+  font-size: 12px;
+}
+
+/* 卡片视图的全局样式 */
+.el-card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important; 
+  /* 由于element-ui 组件样式权重比较高 要覆盖样式 需要 !important */
+}
+
+/* 表格的全局样式 */
+.el-table {
+  margin-top: 15px;
+}
+
+/* 分页的全局样式 */
+.el-pagination {
+  margin-top: 15px;
+}

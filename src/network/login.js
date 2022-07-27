@@ -6,6 +6,7 @@ export function getLogin(username, password) {
     params: {
       username,
       password
-    }
+    },
+    method: "post",
   })
 }

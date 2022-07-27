@@ -72,14 +72,14 @@ export default {
         // console.log(value);  element ui 的 表单方法 validate 有两个参数 （boolean，obj）
         if (!value) return
         getLogin(this.loginForm.userName, this.loginForm.password).then( res => {
-          console.log(res);
+          // console.log(res);
           if (res.meta.status !== 200) return this.$message.error('登录失败!')   // this.$message 是 element-ui 组件库 的Message 组件的全局挂载
           this.$message.success('登录成功')
           // 1. 将登录成功之后的 token 保存到客户端的 sessionStorage 中
           //   1.1 项目中出现了登录之外的其他API接口， 必须在登录之后才能访问
           //   1.2 token 只应用在当前网站打开期间生效，所有将 token 保存到sessionStorage 中
           // 2. 通过编程式导航跳转到后台主页， 路由地址是 /home
-          console.log(res.data.token)
+          // console.log(res.data.token)
           window.sessionStorage.setItem("token", res.data.token)
           this.$router.push('/home')
 

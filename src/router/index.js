@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 const Login = () => import("../views/login/Login") // 路由懒加载
 const Home = () => import("@/views/home/Home")
+const WelCome = () => import('@/components/welcome/Welcom')
+const Users = () => import ("@/components/users/Users")
 
 Vue.use(VueRouter)
 
@@ -16,7 +18,17 @@ const routes = [
     component: Login
   }, {
     path: '/Home',
-    component: Home
+    component: Home,
+    redirect: '/Welcome',   // 只要访问到home地址 重新定向到 Welcome 子路由
+    children: [{
+      path: '/Welcome',
+      component: WelCome
+    }, {
+      path: '/Users',
+      component: Users
+    }
+      
+    ]
   }
   
 ]
