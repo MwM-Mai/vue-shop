@@ -57,3 +57,22 @@ export function deleteUserInfo(id) {
     method: 'delete'
   })
 }
+
+// 获取所有角色
+export function getAllRoleInfo() {
+  return request({
+    url: 'roles',
+    method: 'get'
+  })
+}
+
+// 分配角色的请求
+export function setRoleInfo(id, rid) {
+  return request({
+    url: `users/${id}/role`,
+    data: {
+      rid
+    },
+    method: 'put'
+  })
+}

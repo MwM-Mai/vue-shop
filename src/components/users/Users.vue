@@ -3,7 +3,7 @@
     <!-- 面包屑区域 -->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">用户管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -45,7 +45,7 @@
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(row.id)"></el-button>
           </el-tooltip>
           <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-            <el-button type="warning" icon="el-icon-s-tools" size="mini"></el-button>
+            <el-button type="warning" icon="el-icon-s-tools" size="mini" @click="setRole(row)"></el-button>
           </el-tooltip>
           </template>
         </el-table-column> <!-- 代表的是列 -->
@@ -118,11 +118,38 @@
         <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 分配角色的对话框 -->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="setRoledialogvisible"
+      width="50%"
+      @close="setRoleDialogClosed">
+      <div>
+        <p>当前的用户:{{userInfo.username}}</p>
+        <p>当前的角色:{{userInfo.role_name}}</p>
+        <p>分配新角色:
+          <el-select v-model="selecteRoleId" placeholder="请选择">
+            <el-option
+              v-for="item in userAllInfo"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoledialogvisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import { getUsersList, userStateChanged, getNewuser, getUserId, editUserInfo, deleteUserInfo } from '@/network/users'
+import { getUsersList, userStateChanged, getNewuser, getUserId, editUserInfo, deleteUserInfo, getAllRoleInfo, setRoleInfo } from '@/network/users'
 
 export default {
   data() {
@@ -207,7 +234,15 @@ export default {
           { required: true, message: '请输入手机号码', trigger: 'blur' },
           {validator: checkmobile, trigger: 'blur' }
         ]
-      }
+      },
+      // 控制分配角色对话框的显示和隐藏功能
+      setRoledialogvisible: false,
+      // 需要分配角色的信息
+      userInfo: {},
+      // 获取所有的角色信息
+      userAllInfo: [],
+      // 已经选中的角色 Id 值
+      selecteRoleId: ''
     } 
   },
   methods: {
@@ -244,7 +279,7 @@ export default {
       // console.log(userinfo);
       // 调用请求函数 修改 状态按钮
       userStateChanged(userinfo).then(res => {
-        console.log(res);  
+        // console.log(res);  
         if (res.meta.status !== 200) {
           userinfo.mg_state = !userinfo.mg_state
           return this.$message.error('更新用户状态失败')
@@ -312,16 +347,16 @@ export default {
     // 点击删除按钮 根据 id 删除该用户
     removeUserById(id) {
       // 弹框提示用户是否删除数据
-      this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
       }).then( () => {
         // 用户确认删除 res 打印的是 confirm
           // console.log(res);
-          console.log(id);
+          // console.log(id);
         deleteUserInfo(id).then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.meta.status !== 200) return this.$message.error('删除失败!')
           this.$message.success('删除成功!')
           // 删除成功后重新请求数据  
@@ -332,9 +367,38 @@ export default {
           // console.log(err);
           this.$message.info('已取消删除!')       
         });
+    },
+    // 点击分配角色按钮 展示分配角色的对话框
+    setRole(userinfo) {
+      this.userInfo = userinfo
+      // 获取所有角色信息
+      getAllRoleInfo().then(res => {
+        console.log(res);
+        if (res.meta.status !== 200) return this.$message.error('获取角色信息失败')
+        this.userAllInfo = res.data
+        this.setRoledialogvisible = true 
+      })
+
+    },
+    // 点击确认 添加分配角色
+    saveRoleInfo() {
+      
+      if (!this.selecteRoleId) return this.$message.error('请选择要分配的角色!')
+      // console.log(this.selecteRoleId)
+      setRoleInfo(this.userInfo.id, this.selecteRoleId).then(res => {
+        console.log(res);
+        if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+        this.setRoledialogvisible = false
+        this.getUsersList()
+      })
+    },
+    // 监听分配角色对话框的 关闭 清空 选中分配角色的Id值
+    setRoleDialogClosed() {
+      this.selecteRoleId = ''
+      this.userInfo = {}
     }
   },
-  created() {
+  created(userinfo) {
     // 获取用户的数据
     this.getUsersList()
   }
