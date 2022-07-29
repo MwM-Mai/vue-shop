@@ -58,4 +58,4 @@ export function deleteCateInfo(id) {
     url: `categories/${id}`,
     method: 'delete'
   })
-}
+} 
