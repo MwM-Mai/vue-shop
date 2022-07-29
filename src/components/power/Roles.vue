@@ -225,8 +225,8 @@ export default {
       }).then( () => {
         // 用户确认删除 res 打印的是 confirm
           // console.log(res);
-          console.log(rolesId, rightId);
-        deleteRolesInfo(rolesId, rightId).then(res => {
+          // console.log(rolesId);
+        deleteRolesInfo(rolesId).then(res => {
           // console.log(res);
           if (res.meta.status !== 200) return this.$message.error('删除失败!')
           this.$message.success('删除成功!')

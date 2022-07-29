@@ -28,3 +28,30 @@ html, body, #app {
 .el-pagination {
   margin-top: 15px;
 }
+
+/* 级联选择器设置选项的高度 否之会铺满全屏 */
+.el-cascader-menu {
+  height: 400px;
+}
+
+/* 去除级联选择器 选项底部左右 点击按钮 */
+.el-scrollbar__wrap{
+  overflow: auto;
+  }
+
+
+/* 去除 级联选择器的父级选项中的按钮 点击文本可以选中 */
+.el-cascader-panel .el-radio{
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.el-cascader-panel .el-radio__input{
+	visibility: hidden;
+}
+.el-cascader-panel .el-cascader-node__postfix {
+	top: 10px;
+}
