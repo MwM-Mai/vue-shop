@@ -35,9 +35,9 @@ html, body, #app {
 }
 
 /* 去除级联选择器 选项底部左右 点击按钮 */
-.el-scrollbar__wrap{
+/* .el-scrollbar__wrap{
   overflow: auto;
-  }
+  } */
 
 
 /* 去除 级联选择器的父级选项中的按钮 点击文本可以选中 */
