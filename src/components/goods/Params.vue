@@ -27,7 +27,7 @@
           :props="cateProps"
           @change="handleChange"></el-cascader>
       </el-col>
-     </el-row>
+     </el-row> 
 
       <!-- tab 页签区域 -->
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
