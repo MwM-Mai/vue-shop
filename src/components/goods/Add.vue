@@ -296,7 +296,7 @@ export default {
             if (res.meta.status !== 201) return this.$message.error(res.meta.msg)
             this.$message.success(res.meta.msg)
             this.$router.push('/goods')
-          })
+          }) 
         }
       })
     }
