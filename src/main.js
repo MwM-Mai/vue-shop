@@ -3,6 +3,16 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 
+// 引用 vue-quill-editor 插件 实现富文本框编辑器
+import VueQuillEditor from 'vue-quill-editor'
+// 导入富文本编辑器对应的样式
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+// 注册为 全局可用的组件
+Vue.use(VueQuillEditor)
+
 // 引用了 vue-table-with-tree-grid 插件 实习商品分类的树形表格
 import ZkTable from 'vue-table-with-tree-grid'
 // 导入字体图标 使用自定义图标
