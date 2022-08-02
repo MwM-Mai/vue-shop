@@ -69,3 +69,9 @@ html, body, #app {
 .ql-editor {
   min-height: 300px;
 }
+
+/* 文本提示 水平对齐 盒子必须要设置一定宽度否者强制垂直对齐 */
+.el-tooltip__popper.is-dark {
+  min-width: 50px;
+  text-align: center;
+}
