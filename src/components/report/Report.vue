@@ -15,7 +15,7 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 2. 为ECharts准备一个具有大小的(宽高)的Dom -->
-      <div id="main" style="width: 750px;height:500px;"></div>
+      <div id="main" style="width: 750px;height:500px;"></div> 
     </el-card>
   </div>
 </template>
