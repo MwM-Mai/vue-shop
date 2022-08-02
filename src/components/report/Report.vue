@@ -78,7 +78,7 @@ export default {
     eCharts(option) {
     // lodash 的 合并数据方法
     const result = _.merge(this.option, option)
-    console.log(result);
+    // console.log(result);
 
     // 3. 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));

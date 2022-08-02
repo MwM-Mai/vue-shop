@@ -233,7 +233,7 @@ export default {
         if (res.meta.status !== 200) return this.$message.error('获取订单列表数据失败')
         this.orderList = res.data.goods 
         this.total = res.data.total
-        console.log(res);
+        // console.log(res);
       })
     },
 
