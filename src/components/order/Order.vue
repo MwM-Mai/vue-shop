@@ -36,7 +36,7 @@
           </template>
         </el-table-column>
         <el-table-column label="操作">
-          <template v-slot="{ row }">
+          <template>
             <el-tooltip  effect="dark" content="修改订单地址" placement="top" :enterable="false">
               <el-button type="primary" icon="el-icon-edit" size="mini" @click="showBox"></el-button>
             </el-tooltip>
